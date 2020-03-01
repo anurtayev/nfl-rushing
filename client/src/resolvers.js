@@ -4,8 +4,6 @@ export const typeDefs = gql`
   extend type Query {
     sortBy: String!
     filter: String
-    topCursor: Int
-    bottomCursor: Int
   }
 `;
 

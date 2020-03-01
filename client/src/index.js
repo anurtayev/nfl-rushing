@@ -2,12 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import ApolloClient from "apollo-boost";
+import { ApolloClient } from "apollo-client";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { createGlobalStyle } from "styled-components";
-// import { typeDefs } from "./resolvers";
+import { typeDefs } from "./resolvers";
 import { InMemoryCache } from "apollo-cache-inmemory";
-// import { HttpLink } from "apollo-link-http";
+import { HttpLink } from "apollo-link-http";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -25,22 +25,20 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// cache,
-// link: new HttpLink({
-//   uri: process.env.REACT_APP_GRAPHQL_END_POINT
-// }),
-// typeDefs
-
 const cache = new InMemoryCache();
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_END_POINT
+  cache,
+  link: new HttpLink({
+    uri: process.env.REACT_APP_GRAPHQL_END_POINT
+  }),
+  typeDefs,
+  resolvers: {}
 });
 
 cache.writeData({
   data: {
     sortBy: "yds",
-    filter: "",
-    pageSize: 20
+    filter: ""
   }
 });
 

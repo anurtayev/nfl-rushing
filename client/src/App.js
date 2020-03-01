@@ -29,6 +29,9 @@ const ENTRIES = gql`
       fortyPlus
       fum
     }
+
+    sortBy @client
+    filter @client
   }
 `;
 
@@ -106,7 +109,7 @@ const ControlFilterDownloadLink = styled.a`
 `;
 
 export default function App() {
-  const { loading, error, data, filter } = useQuery(ENTRIES);
+  const { loading, error, data } = useQuery(ENTRIES);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {JSON.stringify(error)}</p>;
@@ -115,7 +118,7 @@ export default function App() {
     <>
       <ControlPanel>
         <ControlFilterPrompt>filter: </ControlFilterPrompt>
-        <ControlFilterInput type="text" defaultValue={filter} />
+        <ControlFilterInput type="text" defaultValue={data.filter} />
         <ControlFilterSubmit>Apply</ControlFilterSubmit>
         <ControlFilterReset>Reset</ControlFilterReset>
         <ControlFilterDownloadLink href={""} download>
