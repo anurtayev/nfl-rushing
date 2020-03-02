@@ -6,5 +6,3 @@ export const typeDefs = gql`
     filter: String
   }
 `;
-
-export const resolvers = {};
