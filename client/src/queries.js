@@ -42,3 +42,9 @@ export const GET_LOCAL_STATE = gql`
     direction @client
   }
 `;
+
+export const GET_CSV = gql`
+  query GetEntries($sortBy: String, $filter: String) {
+    csv(sortBy: $sortBy, filter: $filter)
+  }
+`;

@@ -12,6 +12,13 @@ export default {
         cursor,
         direction
       });
+    },
+
+    csv: async (_, { sortBy, filter }, { dataSources }) => {
+      return await dataSources.rushingAPI.getCsv({
+        sortBy,
+        filter
+      });
     }
   }
 };

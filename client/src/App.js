@@ -5,15 +5,13 @@ import {
   Table,
   CellLink,
   Cell,
-  ControlFilterDownloadLink,
   ControlFilterInput,
   ControlFilterPrompt,
-  ControlFilterReset,
-  ControlFilterSubmit,
+  LongButton,
   ControlPanel,
-  ControlNav
+  ShortButton
 } from "./styledComponents";
-import { ENTRIES, GET_LOCAL_STATE } from "./queries";
+import { ENTRIES, GET_LOCAL_STATE, GET_CSV } from "./queries";
 
 export default function App() {
   const { data: localState } = useQuery(GET_LOCAL_STATE);
@@ -25,9 +23,6 @@ export default function App() {
     cursor = localState.cursor;
     direction = localState.direction;
   }
-
-  console.log("==> cursor", cursor);
-  console.log("==> cursor", typeof cursor);
 
   const { loading, error, data, client } = useQuery(ENTRIES, {
     variables: { sortBy, filter, cursor, direction }
@@ -44,7 +39,7 @@ export default function App() {
   return (
     <>
       <ControlPanel>
-        <ControlNav
+        <ShortButton
           onClick={() => {
             client.writeData({
               data: {
@@ -55,8 +50,8 @@ export default function App() {
           }}
         >
           {"<<"}
-        </ControlNav>
-        <ControlNav
+        </ShortButton>
+        <ShortButton
           onClick={() => {
             client.writeData({
               data: {
@@ -67,7 +62,7 @@ export default function App() {
           }}
         >
           {">>"}
-        </ControlNav>
+        </ShortButton>
         <ControlFilterPrompt>filter:</ControlFilterPrompt>
         <ControlFilterInput
           type="text"
@@ -76,21 +71,34 @@ export default function App() {
             client.writeData({ data: { filterInput: event.target.value } })
           }
         />
-        <ControlFilterSubmit
+        <LongButton
           onClick={() => client.writeData({ data: { filter: filterInput } })}
         >
           Apply
-        </ControlFilterSubmit>
-        <ControlFilterReset
+        </LongButton>
+        <LongButton
           onClick={() => {
             client.writeData({ data: { filter: "", filterInput: "" } });
           }}
         >
           Reset
-        </ControlFilterReset>
-        <ControlFilterDownloadLink href={""} download>
+        </LongButton>
+        <LongButton
+          onClick={async event => {
+            event.preventDefault();
+            event.persist();
+            const result = await client.query({
+              variables: { sortBy, filter },
+              query: GET_CSV
+            });
+            const hrefStr =
+              "data:application/octet-stream;base64," + result.data.csv;
+            // eslint-disable-next-line
+            location.href = hrefStr;
+          }}
+        >
           Download filtered data
-        </ControlFilterDownloadLink>
+        </LongButton>
       </ControlPanel>
       <Table>
         <Cell>{fieldNames.player}</Cell>

@@ -33,21 +33,12 @@ export const ControlFilterInput = styled.input`
   margin-right: 1em;
 `;
 
-export const ControlFilterSubmit = styled.button`
+export const LongButton = styled.button`
   flex-basis: 10%;
   margin-right: 1em;
 `;
 
-export const ControlFilterReset = styled.button`
-  flex-basis: 10%;
-  margin-right: 1em;
-`;
-
-export const ControlNav = styled.button`
+export const ShortButton = styled.button`
   flex-basis: 5%;
   margin-right: 1em;
-`;
-
-export const ControlFilterDownloadLink = styled.a`
-  flex-basis: 30%;
 `;

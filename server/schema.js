@@ -9,6 +9,8 @@ export default gql`
       cursor: Int
       direction: String
     ): [PlayerRecord]!
+
+    csv(sortBy: String, filter: String): String
   }
 
   type PlayerRecord {

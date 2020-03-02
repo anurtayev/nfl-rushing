@@ -1,5 +1,6 @@
 import rawData from "./rushing.json";
 import _ from "lodash";
+import fieldNames from "./fieldNames.json";
 
 const defaultPageSize = process.env.DEFAULT_PAGE_SIZE || 20;
 
@@ -82,10 +83,6 @@ export const getEntries = ({
   return paginatedData;
 };
 
-export default {
-  getEntries
-};
-
 const nameRegex = new RegExp("^[a-zA-Z.' ]*$");
 export const sanitizeInput = ({ filter = "", sortBy = "yds" }) => ({
   sanitizedFilter: nameRegex.test(filter) ? filter : "",
@@ -93,3 +90,23 @@ export const sanitizeInput = ({ filter = "", sortBy = "yds" }) => ({
     ? sortBy
     : "yds"
 });
+
+export const getCsv = ({ sortBy = "yds", filter }) => {
+  const sortedData = getSortedDataSet(sortBy);
+  const data = filterData(sortedData, filter);
+  let dataString = '"' + Object.values(fieldNames).join('","') + '"\n';
+  dataString = data.reduce((acc, cur) => {
+    // eslint-disable-next-line
+    const { __sort_Lng, id, ...pureCur } = cur;
+    return acc.concat('"', Object.values(pureCur).join('","'), '"\n');
+  }, dataString);
+
+  let buff = new Buffer(dataString);
+  let base64data = buff.toString("base64");
+  return base64data;
+};
+
+export default {
+  getEntries,
+  getCsv
+};
