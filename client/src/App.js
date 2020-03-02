@@ -10,21 +10,27 @@ import {
   ControlFilterPrompt,
   ControlFilterReset,
   ControlFilterSubmit,
-  ControlPanel
+  ControlPanel,
+  ControlNav
 } from "./styledComponents";
 import { ENTRIES, GET_LOCAL_STATE } from "./queries";
 
 export default function App() {
   const { data: localState } = useQuery(GET_LOCAL_STATE);
-  let filter, sortBy, filterInput;
+  let filter, sortBy, filterInput, cursor, direction;
   if (localState) {
     filter = localState.filter;
     sortBy = localState.sortBy;
     filterInput = localState.filterInput;
+    cursor = localState.cursor;
+    direction = localState.direction;
   }
 
+  console.log("==> cursor", cursor);
+  console.log("==> cursor", typeof cursor);
+
   const { loading, error, data, client } = useQuery(ENTRIES, {
-    variables: { sortBy, filter }
+    variables: { sortBy, filter, cursor, direction }
   });
 
   let entries;
@@ -38,6 +44,30 @@ export default function App() {
   return (
     <>
       <ControlPanel>
+        <ControlNav
+          onClick={() => {
+            client.writeData({
+              data: {
+                cursor: parseInt(entries[0].id),
+                direction: "previous"
+              }
+            });
+          }}
+        >
+          {"<<"}
+        </ControlNav>
+        <ControlNav
+          onClick={() => {
+            client.writeData({
+              data: {
+                cursor: parseInt(entries[entries.length - 1].id),
+                direction: "next"
+              }
+            });
+          }}
+        >
+          {">>"}
+        </ControlNav>
         <ControlFilterPrompt>filter:</ControlFilterPrompt>
         <ControlFilterInput
           type="text"

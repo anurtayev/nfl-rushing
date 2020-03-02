@@ -29,7 +29,7 @@ export const ControlFilterPrompt = styled.span`
 `;
 
 export const ControlFilterInput = styled.input`
-  flex-basis: 40%;
+  flex-basis: 20%;
   margin-right: 1em;
 `;
 
@@ -40,6 +40,11 @@ export const ControlFilterSubmit = styled.button`
 
 export const ControlFilterReset = styled.button`
   flex-basis: 10%;
+  margin-right: 1em;
+`;
+
+export const ControlNav = styled.button`
+  flex-basis: 5%;
   margin-right: 1em;
 `;
 

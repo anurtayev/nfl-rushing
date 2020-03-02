@@ -53,6 +53,9 @@ export const filterData = (data, filter) => {
 export const paginateData = (data, cursor, direction, pageSize) => {
   if (!data || !Array.isArray(data)) return [];
 
+  if (!cursor || (direction === "next" && cursor === data[data.length - 1].id))
+    return data.slice(0, pageSize);
+
   if (direction === "next") {
     const findCursorIndex = data.findIndex(element => element.id > cursor);
     return data.slice(findCursorIndex, findCursorIndex + pageSize);

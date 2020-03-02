@@ -37,7 +37,9 @@ cache.writeData({
   data: {
     sortBy: "yds",
     filter: "",
-    filterInput: ""
+    filterInput: "",
+    cursor: null,
+    direction: "next"
   }
 });
 
