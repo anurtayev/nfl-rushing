@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import fieldNames from "./fieldNames.json";

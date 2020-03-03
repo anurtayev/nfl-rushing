@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-RUN npm run prebuild
+RUN npm run lint && npm test && npm run prebuild
 
 FROM node:10
 WORKDIR /usr/src/app

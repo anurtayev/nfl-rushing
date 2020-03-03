@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "npx eslint --max-warnings 0 src",
+    "lint": "eslint --max-warnings 0 .",
     "prettify": " pretty-quick --staged",
     "precommit": "run-s lint test prettify",
     "start": "npm run dev",

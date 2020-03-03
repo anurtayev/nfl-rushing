@@ -48,6 +48,7 @@ ReactDOM.render(
     <GlobalStyle />
     <App />
   </ApolloProvider>,
+  // eslint-disable-next-line
   document.getElementById("root")
 );
 

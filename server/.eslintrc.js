@@ -4,7 +4,7 @@ module.exports = {
     node: true,
     jest: true
   },
-  extends: ["eslint:recommended", "plugin:react/recommended"],
+  extends: ["eslint:recommended"],
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly"
@@ -13,6 +13,5 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module"
   },
-  rules: {},
-  plugins: ["react"]
+  rules: {}
 };
