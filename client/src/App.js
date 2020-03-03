@@ -13,6 +13,8 @@ import {
 } from "./styledComponents";
 import { ENTRIES, GET_LOCAL_STATE, GET_CSV } from "./queries";
 
+const nameRegex = new RegExp("^[a-zA-Z.' ]*$");
+
 export default function App() {
   const { data: localState } = useQuery(GET_LOCAL_STATE);
   let filter, sortBy, filterInput, cursor, direction;
@@ -72,7 +74,13 @@ export default function App() {
           }
         />
         <LongButton
-          onClick={() => client.writeData({ data: { filter: filterInput } })}
+          onClick={() => {
+            if (nameRegex.test(filter)) {
+              client.writeData({ data: { filter: filterInput } });
+            } else {
+              console.log("wrong name filter input...");
+            }
+          }}
         >
           Apply
         </LongButton>

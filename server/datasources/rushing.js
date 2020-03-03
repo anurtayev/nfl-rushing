@@ -36,7 +36,7 @@ const dataSortedByYds = sortFn(cleansedData, "yds").map(mapIdFn);
 const dataSortedByLng = sortFn(cleansedData, "__sort_Lng").map(mapIdFn);
 const dataSortedByTD = sortFn(cleansedData, "td").map(mapIdFn);
 
-export const getSortedDataSet = sortBy =>
+const getSortedDataSet = sortBy =>
   sortBy === "yds"
     ? dataSortedByYds
     : sortBy === "lng"
@@ -45,13 +45,13 @@ export const getSortedDataSet = sortBy =>
     ? dataSortedByTD
     : dataSortedByYds;
 
-export const filterData = (data, filter) => {
+const filterData = (data, filter) => {
   if (!data || !Array.isArray(data)) return [];
 
   return filter ? data.filter(entry => entry.player.includes(filter)) : data;
 };
 
-export const paginateData = (data, cursor, direction, pageSize) => {
+const paginateData = (data, cursor, direction, pageSize) => {
   if (!data || !Array.isArray(data)) return [];
 
   if (!cursor || (direction === "next" && cursor === data[data.length - 1].id))
@@ -82,14 +82,6 @@ export const getEntries = ({
 
   return paginatedData;
 };
-
-const nameRegex = new RegExp("^[a-zA-Z.' ]*$");
-export const sanitizeInput = ({ filter = "", sortBy = "yds" }) => ({
-  sanitizedFilter: nameRegex.test(filter) ? filter : "",
-  sanitizedSortBy: ["yds", "td", "lng"].some(element => sortBy === element)
-    ? sortBy
-    : "yds"
-});
 
 export const getCsv = ({ sortBy = "yds", filter }) => {
   const sortedData = getSortedDataSet(sortBy);
