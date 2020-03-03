@@ -1,4 +1,3 @@
-import rushingJson from "./rushing.json";
 import { getCsv, getEntries } from "./rushing";
 
 describe("getEntries", () => {
@@ -58,5 +57,10 @@ describe("getEntries", () => {
     expect(result.length).toEqual(20);
     expect(result[0].player).toEqual("Russell Shepard");
     expect(result[14].player).toEqual("Tom Savage");
+  });
+
+  it("should return correct csv", () => {
+    const result = getCsv({ cursor: 100 });
+    expect(result).toMatchSnapshot();
   });
 });
